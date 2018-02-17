@@ -22,6 +22,7 @@ class MainMenuVC: UIViewController, SideMenuDelegate {
     var zoomLevel: Float = 15
     var sideMenu: SideMenu!
     var markers = [GMSMarker]()
+    var polyline: GMSPolyline!
     
     //MARK: Methods
     

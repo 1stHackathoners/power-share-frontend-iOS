@@ -97,7 +97,7 @@ extension MainMenuVC: CLLocationManagerDelegate, GMSMapViewDelegate, CustomAlert
         locationManager = CLLocationManager()
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestAlwaysAuthorization()
-        locationManager.distanceFilter = 10
+        locationManager.distanceFilter = 0.5
         locationManager.startUpdatingLocation()
         locationManager.delegate = self
     }
@@ -115,9 +115,13 @@ extension MainMenuVC: CLLocationManagerDelegate, GMSMapViewDelegate, CustomAlert
         if option == 1{
             guard let destLocation = destinationLocation else { return }
             guard let sourceLocation = currentLocation?.coordinate else { return }
+            
+            //clearing the path if there is any
+            if polyline != nil {
+                polyline.map = nil
+            }
+            
             getPolylineRoute(from: sourceLocation, to: destLocation)
-            
-            
         }
     }
     
@@ -152,10 +156,10 @@ extension MainMenuVC: CLLocationManagerDelegate, GMSMapViewDelegate, CustomAlert
                             })
                             
                             let path = GMSPath(fromEncodedPath: polyString)
-                            let polyline = GMSPolyline(path: path)
-                            polyline.strokeWidth = 4.0
-                            polyline.strokeColor = UIColor.blue
-                            polyline.map = self.mapView
+                            self.polyline = GMSPolyline(path: path)
+                            self.polyline.strokeWidth = 4.0
+                            self.polyline.strokeColor = UIColor.blue
+                            self.polyline.map = self.mapView
                         }
                     }
                     
