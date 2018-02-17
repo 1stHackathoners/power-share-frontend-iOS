@@ -43,17 +43,81 @@
                     <view key="view" contentMode="scaleToFill" id="QMG-8y-Vao">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4AH-Ls-6SD">
+                                <rect key="frame" x="16" y="295" width="343" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="at8-xy-QfS"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="X0U-4Z-O1z">
+                                <rect key="frame" x="16" y="333" width="343" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="VfU-Zv-AcH"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="GHB-Bc-OBW">
+                                <rect key="frame" x="16" y="95" width="343" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="YOm-V9-JFE"/>
+                                </constraints>
+                                <attributedString key="attributedText">
+                                    <fragment content="Power Share">
+                                        <attributes>
+                                            <color key="NSColor" red="0.0" green="0.97680455450000003" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="NSFont" size="50" name="AvenirNext-Bold"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="truncatingTail" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V1g-Zy-dUw">
+                                <rect key="frame" x="16" y="379" width="343" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="ZlY-1n-ltV"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="loginButtonPressed:" destination="rKM-s0-DwE" eventType="touchUpInside" id="ONU-30-Wmz"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="X0U-4Z-O1z" firstAttribute="leading" secondItem="tUr-Y0-fzQ" secondAttribute="leading" constant="16" id="0pM-pY-Ug6"/>
+                            <constraint firstItem="tUr-Y0-fzQ" firstAttribute="trailing" secondItem="X0U-4Z-O1z" secondAttribute="trailing" constant="16" id="2WN-XN-9Nc"/>
+                            <constraint firstItem="V1g-Zy-dUw" firstAttribute="top" secondItem="X0U-4Z-O1z" secondAttribute="bottom" constant="16" id="38F-oq-GkD"/>
+                            <constraint firstItem="X0U-4Z-O1z" firstAttribute="top" secondItem="4AH-Ls-6SD" secondAttribute="bottom" constant="8" id="9ze-Yr-3vi"/>
+                            <constraint firstItem="tUr-Y0-fzQ" firstAttribute="trailing" secondItem="V1g-Zy-dUw" secondAttribute="trailing" constant="16" id="D7f-n5-k54"/>
+                            <constraint firstItem="V1g-Zy-dUw" firstAttribute="leading" secondItem="tUr-Y0-fzQ" secondAttribute="leading" constant="16" id="Icg-z4-zqB"/>
+                            <constraint firstItem="GHB-Bc-OBW" firstAttribute="top" secondItem="tUr-Y0-fzQ" secondAttribute="top" constant="75" id="Xo2-Ay-KLm"/>
+                            <constraint firstItem="GHB-Bc-OBW" firstAttribute="leading" secondItem="tUr-Y0-fzQ" secondAttribute="leading" constant="16" id="bNj-2f-uie"/>
+                            <constraint firstItem="4AH-Ls-6SD" firstAttribute="leading" secondItem="tUr-Y0-fzQ" secondAttribute="leading" constant="16" id="bU0-2c-O3k"/>
+                            <constraint firstItem="tUr-Y0-fzQ" firstAttribute="trailing" secondItem="GHB-Bc-OBW" secondAttribute="trailing" constant="16" id="cmI-hy-HCk"/>
+                            <constraint firstItem="4AH-Ls-6SD" firstAttribute="top" secondItem="GHB-Bc-OBW" secondAttribute="bottom" constant="100" id="uyi-EN-SkC"/>
+                            <constraint firstItem="tUr-Y0-fzQ" firstAttribute="trailing" secondItem="4AH-Ls-6SD" secondAttribute="trailing" constant="16" id="wCZ-DJ-qHP"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="tUr-Y0-fzQ"/>
                     </view>
                     <connections>
+                        <outlet property="loginButton" destination="V1g-Zy-dUw" id="SlR-cV-ony"/>
+                        <outlet property="logoLabel" destination="GHB-Bc-OBW" id="JFr-H2-VpZ"/>
+                        <outlet property="usermailTextField" destination="X0U-4Z-O1z" id="Nsk-ro-x6y"/>
+                        <outlet property="usernameTextField" destination="4AH-Ls-6SD" id="5np-5I-DN9"/>
                         <segue destination="ZEX-dJ-FP5" kind="presentation" identifier="MainMenuVCSegue" id="vjo-uj-5Nf"/>
                         <segue destination="GjX-iy-dyc" kind="presentation" identifier="SigninVCSegue" id="Tdr-p1-ryA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YSt-da-Gg3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-178" y="-1397"/>
+            <point key="canvasLocation" x="-178.5" y="-1397.5"/>
         </scene>
         <!--SigninVC-->
         <scene sceneID="KYD-Iw-ci2">
@@ -62,7 +126,30 @@
                     <view key="view" contentMode="scaleToFill" id="FBD-Y5-4ld">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="JJJ-b8-oWM">
+                                <rect key="frame" x="16" y="95" width="343" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="I4J-g3-zKL"/>
+                                </constraints>
+                                <attributedString key="attributedText">
+                                    <fragment content="Power Share">
+                                        <attributes>
+                                            <color key="NSColor" red="0.0" green="0.97680455450000003" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="NSFont" size="50" name="AvenirNext-Bold"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="truncatingTail" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="JJJ-b8-oWM" firstAttribute="leading" secondItem="53Q-gB-uB1" secondAttribute="leading" constant="16" id="4YF-M0-ZiK"/>
+                            <constraint firstItem="JJJ-b8-oWM" firstAttribute="top" secondItem="53Q-gB-uB1" secondAttribute="top" constant="75" id="CML-XS-wJx"/>
+                            <constraint firstItem="53Q-gB-uB1" firstAttribute="trailing" secondItem="JJJ-b8-oWM" secondAttribute="trailing" constant="16" id="sTf-0f-pek"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="53Q-gB-uB1"/>
                     </view>
                     <connections>
