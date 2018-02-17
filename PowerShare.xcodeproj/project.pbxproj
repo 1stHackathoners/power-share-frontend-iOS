@@ -26,6 +26,7 @@
 		C77DE1B9203813050067F5F3 /* UITextFieldExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77DE1B8203813050067F5F3 /* UITextFieldExt.swift */; };
 		C790EEB32037C716007B0557 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C790EEB22037C716007B0557 /* Constants.swift */; };
 		C790EEB62037D409007B0557 /* UIImageViewExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = C790EEB52037D409007B0557 /* UIImageViewExt.swift */; };
+		C7D8CABD2038AB3700127F21 /* DataClasses.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D8CABC2038AB3700127F21 /* DataClasses.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +53,7 @@
 		C77DE1B8203813050067F5F3 /* UITextFieldExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextFieldExt.swift; sourceTree = "<group>"; };
 		C790EEB22037C716007B0557 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		C790EEB52037D409007B0557 /* UIImageViewExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageViewExt.swift; sourceTree = "<group>"; };
+		C7D8CABC2038AB3700127F21 /* DataClasses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataClasses.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,6 +151,7 @@
 			children = (
 				C7725368203786120095320A /* AppDelegate.swift */,
 				C772536C203786120095320A /* Main.storyboard */,
+				C7D8CABB2038AB2900127F21 /* Data Classes */,
 				C754CDEF2037E4FE005F93AA /* Side Menu */,
 				C754CDF22037E530005F93AA /* Protocols */,
 				C754CDFA2037E9AD005F93AA /* Custom Navigation Controller */,
@@ -181,6 +184,14 @@
 				C77808B52038840A008B5387 /* GlobalVars.swift */,
 			);
 			path = Constants;
+			sourceTree = "<group>";
+		};
+		C7D8CABB2038AB2900127F21 /* Data Classes */ = {
+			isa = PBXGroup;
+			children = (
+				C7D8CABC2038AB3700127F21 /* DataClasses.swift */,
+			);
+			path = "Data Classes";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -317,6 +328,7 @@
 				C754CDF12037E50F005F93AA /* Side Menu.swift in Sources */,
 				C754CDF42037E54B005F93AA /* SideMenuProtocol.swift in Sources */,
 				C77808B820389142008B5387 /* LoginVCExt.swift in Sources */,
+				C7D8CABD2038AB3700127F21 /* DataClasses.swift in Sources */,
 				C790EEB62037D409007B0557 /* UIImageViewExt.swift in Sources */,
 				C77808B62038840A008B5387 /* GlobalVars.swift in Sources */,
 				C754CDF92037E590005F93AA /* CustomAlertController.swift in Sources */,

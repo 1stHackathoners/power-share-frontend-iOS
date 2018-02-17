@@ -95,7 +95,7 @@ extension LoginVC{
     
     // fetching user data
     
-    func fetchUser(username: String, completion: @escaping (_ password: String) -> ()){
+    func fetchUser(username: String, completion: @escaping (User, Int) -> ()){
         let url = URL(string: "https://power-share-hackathon.herokuapp.com/user/info")
         var request = URLRequest(url: url!)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
@@ -128,12 +128,20 @@ extension LoginVC{
                 if let json = json{
                     DispatchQueue.main.async {
                         guard let password = json.value(forKey: PASSWORD) as? String else { return }
-                        completion(password)
+                        guard let username = json.value(forKey: NAME) as? String else { return }
+                        guard let totalCredit = json.value(forKey: TOTAL_CREDIT) as? Int else { return }
+                        
+                        user = User(username: username, password: password, totalCredit: totalCredit)
+                        
+                        completion(user!, 1)
                     }
                 }
                 
             } catch {
                 print(error)
+                DispatchQueue.main.async {
+                    completion(User(username: EMPTY_STRING, password: EMPTY_STRING, totalCredit: 0), 0)
+                }
             }
          
         }

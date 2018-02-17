@@ -74,6 +74,5 @@ extension MainMenuVC: CLLocationManagerDelegate {
         marker.map = self.mapView
         return marker
     }
-    
-    
 }
+

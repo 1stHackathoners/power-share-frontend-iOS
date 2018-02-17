@@ -244,9 +244,7 @@ class SideMenu: NSObject{
             if translation.x > blackViewFrameWidth * 0.25{
                 showMenu()
             } else {
-                dismisMenu {
-                    return
-                }
+                dismisMenu()
             }
         }
         
@@ -267,9 +265,7 @@ class SideMenu: NSObject{
         
         if gesture.state == .ended{
             if translation.x < -blackViewFrameWidth * 0.10 {
-                dismisMenu {
-                    return
-                }
+                dismisMenu()
             } else {
                 showMenu()
             }
@@ -287,32 +283,29 @@ class SideMenu: NSObject{
         }, completion: nil)
     }
     
-    @objc private func dismisMenu(completion: @escaping () -> () ){
+    @objc private func dismisMenu(){
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
             self.sideMenu.layer.shadowOpacity = 0
             self.sideMenu.layer.shadowRadius = 0
             self.blackView.alpha = 0
             self.sideMenu.frame.origin.x = -(self.blackView.frame.width * self.sideMenuWidthMultiplier)
-        }) { (finisehd) in
-            completion()
-        }
+        }, completion: nil)
     }
     
     @objc private func stepperHasChanged(_ sender: UIStepper){
         radius = Int(sender.value)
         lookForRadius.text = "Looking for " + String(sender.value) + " km radius."
-        dismisMenu {
-            if let controllingVC = self.controllingViewController as? SideMenuDelegate {
-                controllingVC.handleSideMenuOptions(selection: 0)
-            }
+        dismisMenu()
+        if let controllingVC = self.controllingViewController as? SideMenuDelegate {
+            controllingVC.handleSideMenuOptions(selection: 0)
+            
         }
     }
     
     @objc private func logoutLabelTapped(_ gesture: UITapGestureRecognizer){
-        dismisMenu {
-            if let controllingVC = self.controllingViewController as? SideMenuDelegate {
-                controllingVC.handleSideMenuOptions(selection: 1)
-            }
+        dismisMenu()
+        if let controllingVC = self.controllingViewController as? SideMenuDelegate {
+            controllingVC.handleSideMenuOptions(selection: 1)
         }
     }
 }

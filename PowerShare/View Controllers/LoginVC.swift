@@ -145,18 +145,25 @@ class LoginVC: UIViewController, UITextFieldDelegate {
             })
             
             //do some checking and then let the user to get in
-            fetchUser(username: usernameTextField.text!, completion: { (password) in
+            fetchUser(username: usernameTextField.text!, completion: { (user, option) in
                 UIView.animate(withDuration: 0.5, animations: {
                     loadingView.alpha = 0
                     refreshIndicator.startAnimating()
                 })
                 
-                if password == self.passwordTextField.text{
-                    self.performSegue(withIdentifier: MAIN_MENU_VC_SEGUE, sender: self)
-                } else {
+                if option == 0{
                     // alert
-                    alert = CustomAlertController(message: "Upsss!", description: "Password is incorrect. Try again.", buttonTitle: "OK", shouldVibrate: false)
+                    alert = CustomAlertController(message: "Upsss!", description: "The user does not exist.", buttonTitle: "OK", shouldVibrate: false)
                     alert.show()
+                } else {
+                    if user.password != self.passwordTextField.text{
+                        // alert
+                        alert = CustomAlertController(message: "Upsss!", description: "Password is incorrect. Try again.", buttonTitle: "OK", shouldVibrate: false)
+                        alert.show()
+                    } else {
+                        // access granted
+                        self.performSegue(withIdentifier: MAIN_MENU_VC_SEGUE, sender: self)
+                    }
                 }
             })
         } else {

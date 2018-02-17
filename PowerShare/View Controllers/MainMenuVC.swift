@@ -54,6 +54,11 @@ class MainMenuVC: UIViewController, SideMenuDelegate {
         super.viewWillAppear(animated)
         // initiating side menu
         sideMenu = SideMenu(controllingViewController: self)
+        if let userData = user{
+            sideMenu.nameLabel.text = userData.username
+            sideMenu.mailLabel.text = userData.username + "@test.com"
+            sideMenu.totalCreditLabel.text = "You have $\(userData.totalCredit) left."
+        }
         fetchData()
     }
     
@@ -85,7 +90,7 @@ class MainMenuVC: UIViewController, SideMenuDelegate {
         var request = URLRequest(url: url)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
-        guard let location = currentLocation?.coordinate else { return } 
+        guard let location = currentLocation?.coordinate else { return }
         
         let postString = "latitude=\(location.latitude)&longitude=\(location.longitude)&range=\(sideMenu.radius * 1000)"
         
@@ -114,14 +119,14 @@ class MainMenuVC: UIViewController, SideMenuDelegate {
                 if let json = json {
                     //print(json)
                     if let results = json.value(forKey: RESULT) as? NSArray{
-                        
+                        //print(results)
                         for result in results{
                             if let result = result as? NSDictionary{
                                 guard let location = result.value(forKey: LOCATION) as? NSArray else { return }
-                                guard let stationName = result.value(forKey: NAME) as? String else { return }
+                                guard let stationName = result.value(forKey: STATION_NAME) as? String else {  return }
                                 
                                 // location[1] is latitude
-                                // location[2] is longitude
+                                // location[0] is longitude
                                 // name is for the station name
                                 
                                 self.markers.append(self.createMapMarker(markerTitle: stationName, latitude: location[1] as! CLLocationDegrees, longitude: location[0] as! CLLocationDegrees))
@@ -141,8 +146,8 @@ class MainMenuVC: UIViewController, SideMenuDelegate {
                     imageView.image = UIImage(named: "PowerStationIcon")
                     markerIconView.addSubview(imageView)
                     markerIconView.tintColor = UIColor.red
-                    
                     for marker in self.markers{
+                        print("KOYARUM")
                         marker.map = self.mapView
                         marker.iconView = markerIconView
                     }

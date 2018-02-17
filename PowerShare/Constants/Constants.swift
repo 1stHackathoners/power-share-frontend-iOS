@@ -34,8 +34,10 @@ let EMPTY_STRING = ""
 // Json Constants
 let LOCATION = "location"
 let RESULT = "result"
-let NAME = "name"
+let NAME = "username"
+let STATION_NAME = "name"
 let PASSWORD = "password"
+let TOTAL_CREDIT = "credit"
 
 // UITextField Placholders
 let ENTER_USER_NAME = "Enter username"

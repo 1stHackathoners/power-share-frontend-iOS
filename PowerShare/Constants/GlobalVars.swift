@@ -8,6 +8,7 @@
 
 import UIKit
 
+var user: User?
 var alert: CustomAlertController!
 var currentylActiveKeyboard: UITextField?
 var keyboardHeight: CGFloat!
