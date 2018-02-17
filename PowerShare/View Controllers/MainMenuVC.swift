@@ -29,6 +29,12 @@ class MainMenuVC: UIViewController, SideMenuDelegate {
         //generalize those later
         navigationItem.title = "Locate a power station"
         
+        view.addSubview(loadingView)
+        UIView.animate(withDuration: 0.5, animations: {
+            loadingView.alpha = 1
+            refreshIndicator.startAnimating()
+        })
+        
         inititateLocationManager()
         
         self.currentLocation = locationManager.location

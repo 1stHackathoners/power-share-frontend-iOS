@@ -11,7 +11,9 @@ import UIKit
 class LoginVC: UIViewController, UITextFieldDelegate {
     
     //MARK: Properties
+    
     //IBOutlets
+    
     @IBOutlet weak var logoLabel: UILabel!{
         didSet{
             logoLabel.textColor = UIColor.green
@@ -23,25 +25,36 @@ class LoginVC: UIViewController, UITextFieldDelegate {
     }
     @IBOutlet weak var usernameTextField: UITextField!{
         didSet{
-            usernameTextField.placeholder = "Enter user name"
+            usernameTextField.placeholder = ENTER_USER_NAME
+            usernameTextField.returnKeyType = .continue
+            usernameTextField.autocorrectionType = .no
+            usernameTextField.autocapitalizationType = .none
+            usernameTextField.keyboardType = .alphabet
+            usernameTextField.textColor = UIColor.green
+            usernameTextField.tintColor = usernameTextField.textColor
             usernameTextField.tag = 1
-            usermailTextField.returnKeyType = .continue
+            usernameTextField.addIcon(image: UIImage(named: PROFILE_ICON), leftPadding: 5)
             usernameTextField.addCharacterCounter(counterLabel: counterLabel, rightPadding: 0)
-            
         }
     }
-    @IBOutlet weak var usermailTextField: UITextField!{
+    @IBOutlet weak var passwordTextField: UITextField!{
         didSet{
-            usermailTextField.placeholder = "Enter user password"
-            usermailTextField.tag = 2
-            usermailTextField.isSecureTextEntry = true
-            usermailTextField.returnKeyType = .go
-            usermailTextField.addCharacterCounter(counterLabel: counterLabel, rightPadding: 0)
+            passwordTextField.placeholder = ENTER_PASSWORD
+            passwordTextField.isSecureTextEntry = true
+            passwordTextField.returnKeyType = .go
+            passwordTextField.autocorrectionType = .no
+            passwordTextField.autocapitalizationType = .none
+            passwordTextField.keyboardType = .alphabet
+            passwordTextField.textColor = UIColor.green
+            passwordTextField.tintColor = passwordTextField.textColor
+            passwordTextField.tag = 2
+            passwordTextField.addIcon(image: UIImage(named: PASSWORD_ICON), leftPadding: 5)
+            passwordTextField.addCharacterCounter(counterLabel: counterLabel, rightPadding: 0)
         }
     }
     @IBOutlet weak var loginButton: UIButton!{
         didSet{
-            let attributedString =  NSMutableAttributedString(string: "Login", attributes: [NSAttributedStringKey.font: UIFont(name: AVENIR_NEXT_REGULAR, size: 15)!, NSAttributedStringKey.foregroundColor: UIColor.white])
+            let attributedString =  NSMutableAttributedString(string: LOGIN, attributes: [NSAttributedStringKey.font: UIFont(name: AVENIR_NEXT_REGULAR, size: 15)!, NSAttributedStringKey.foregroundColor: UIColor.white])
             loginButton.setAttributedTitle(attributedString, for: .normal)
             loginButton.backgroundColor = UIColor.green
             loginButton.layer.shadowColor = UIColor.lightGray.cgColor
@@ -54,12 +67,12 @@ class LoginVC: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var signupButton: UIButton!{
         didSet{
-            let attributedString1 = NSMutableAttributedString(string: "Don't have an account? ", attributes: [NSAttributedStringKey.font: UIFont(name: AVENIR_NEXT_REGULAR, size: 15)!, NSAttributedStringKey.foregroundColor: UIColor.green])
+            let attributedString1 = NSMutableAttributedString(string: DONT_HAVE_AN_ACCOUNT, attributes: [NSAttributedStringKey.font: UIFont(name: AVENIR_NEXT_REGULAR, size: 15)!, NSAttributedStringKey.foregroundColor: UIColor.green])
             
-            let attributedString2 = NSMutableAttributedString(string: "Sign up now.", attributes: [NSAttributedStringKey.font: UIFont(name: AVENIR_NEXT_DEMI_BOLD, size: 15)!, NSAttributedStringKey.foregroundColor: UIColor.green])
+            let attributedString2 = NSMutableAttributedString(string: SIGN_UP, attributes: [NSAttributedStringKey.font: UIFont(name: AVENIR_NEXT_DEMI_BOLD, size: 15)!, NSAttributedStringKey.foregroundColor: UIColor.green])
             
             attributedString1.append(attributedString2)
-            
+    
             signupButton.setAttributedTitle(attributedString1, for: .normal)
             signupButton.backgroundColor = UIColor.clear
             signupButton.titleLabel?.adjustsFontSizeToFitWidth = true
@@ -67,15 +80,13 @@ class LoginVC: UIViewController, UITextFieldDelegate {
         }
     }
     
-    var currentylActiveKeyboard: UITextField?
-    var keyboardHeight: CGFloat!
-    let emptySpacePt: CGFloat = 35
-    
     //MARK: Methods
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        // setting delegates
         usernameTextField.delegate = self
-        usermailTextField.delegate = self
+        passwordTextField.delegate = self
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -90,7 +101,7 @@ class LoginVC: UIViewController, UITextFieldDelegate {
         setAlphasForFadingINAnimation()
         animateLoginScreen()
         
-        // add observers
+        // adding observers
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
@@ -101,7 +112,7 @@ class LoginVC: UIViewController, UITextFieldDelegate {
     private func setAlphasForFadingINAnimation(){
         logoLabel.alpha = 0
         usernameTextField.alpha = 0
-        usermailTextField.alpha = 0
+        passwordTextField.alpha = 0
         loginButton.alpha = 0
     }
     
@@ -113,7 +124,7 @@ class LoginVC: UIViewController, UITextFieldDelegate {
             self.usernameTextField.alpha = 1
         }, completion: nil)
         UIView.animate(withDuration: 0.5, delay: 0.6, options: .curveLinear, animations: {
-            self.usermailTextField.alpha = 1
+            self.passwordTextField.alpha = 1
         }, completion: nil)
         UIView.animate(withDuration: 0.5, delay: 0.9, options: .curveLinear, animations: {
             self.loginButton.alpha = 1
@@ -121,11 +132,16 @@ class LoginVC: UIViewController, UITextFieldDelegate {
     }
     
     //MARK: Actions
+    
     @IBAction func loginButtonPressed(_ sender: UIButton) {
-        if usernameTextField.text != EMPTY_STRING && usermailTextField.text != EMPTY_STRING{
+        //if any ui elements is active, hide them
+        view.endEditing(true)
+        
+        if usernameTextField.text != EMPTY_STRING && passwordTextField.text != EMPTY_STRING{
             //do some checking and then let the user to get in
             performSegue(withIdentifier: MAIN_MENU_VC_SEGUE, sender: self)
         } else {
+            // alert
             alert = CustomAlertController(message: "Upsss!", description: "Fields cannot left blank.", buttonTitle: "OK", shouldVibrate: false)
             alert.show()
         }
@@ -134,82 +150,4 @@ class LoginVC: UIViewController, UITextFieldDelegate {
     @IBAction func signupButtonPressed(_ sender: UIButton) {
         performSegue(withIdentifier: SIGN_UP_VC_SEGUE, sender: self)
     }
-    
-    
-    //MARK: TextField Handling
-    
-    @objc func keyboardWillShow(_ notification: Notification) {
-        if let keyboardFrame: NSValue = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue {
-            let keyboardRectangle = keyboardFrame.cgRectValue
-            keyboardHeight = self.view.frame.size.height - keyboardRectangle.height
-            
-            if let activeKeyboard = currentylActiveKeyboard{
-                if activeKeyboard.frame.origin.y > self.keyboardHeight - self.emptySpacePt{
-                    UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-                        self.view.frame.origin.y -= (activeKeyboard.frame.origin.y - (self.keyboardHeight - self.emptySpacePt))
-                    }, completion: nil)
-                }
-            }
-        } else {
-            if let activeKeyboard = currentylActiveKeyboard ,let keybHeight = keyboardHeight{
-                if activeKeyboard.frame.origin.y > keybHeight - emptySpacePt{
-                    UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-                        self.view.frame.origin.y -= (activeKeyboard.frame.origin.y - (keybHeight - self.emptySpacePt))
-                    }, completion: nil)
-                } else {
-                    UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-                        self.view.frame.origin.y = 0
-                    }, completion: nil)
-                }
-            }
-        }
-    }
-    
-    @objc func keyboardWillHide(_ notification: Notification) {
-        if view.frame.minY < 0{
-            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-                self.view.frame.origin.y = 0
-            }, completion: nil)
-        }
-    }
-    
-    internal override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        currentylActiveKeyboard = nil
-        view.endEditing(true)
-    }
-    
-    internal func textFieldDidBeginEditing(_ textField: UITextField) {
-        currentylActiveKeyboard = textField
-        keyboardWillShow(Notification(name: NSNotification.Name.UIKeyboardWillShow))
-        
-        if let characterCount = textField.text?.count {
-            if textField.tag == 1{
-                counterLabel.text = String(40 - characterCount)
-            } else {
-                counterLabel.text = String(20 - characterCount)
-            }
-        }
-    }
-    
-    internal func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if textField.returnKeyType == .continue{
-            usermailTextField.becomeFirstResponder()
-        } else if textField.returnKeyType == .go {
-            loginButtonPressed(loginButton)
-        }
-        textField.resignFirstResponder()
-        currentylActiveKeyboard = nil
-        return true
-    }
-    
-    internal func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let newString = NSString(string: textField.text!).replacingCharacters(in: range, with: string)
-        
-        if textField.tag == 1{
-            counterLabel.text = newString.count == 41 ? String(0) : String(40 - newString.count)
-            return newString.count <= 40
-        } else {
-            counterLabel.text = newString.count == 21 ? String(0) : String(20 - newString.count)
-            return newString.count <= 20
-        }
-    }}
+}

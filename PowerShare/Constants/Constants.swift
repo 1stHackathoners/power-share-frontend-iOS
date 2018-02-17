@@ -14,6 +14,8 @@ let AVENIR_NEXT_ITALIC = "AvenirNext-Italic"
 // Icons
 let MENU_ICON = "MenuIcon"
 let DEFAULT_PROFILE_IMAGE = "DefaultProfileImage"
+let PROFILE_ICON = "ProfileIcon"
+let PASSWORD_ICON = "PasswordIcon"
 
 // Segues
 let SIGN_UP_VC_SEGUE = "SignupVCSegue"
@@ -22,6 +24,9 @@ let MAIN_MENU_VC_SEGUE = "MainMenuVCSegue"
 
 // Strings
 let YOUR_CURRENT_POS = "Your current position"
+let LOGIN = "Login"
+let DONT_HAVE_AN_ACCOUNT = "Don't have an account? "
+let SIGN_UP = "Sign up now."
 let FOOTER_NAME = "PowerShare "
 let FOOTER_YEAR = "2018"
 let EMPTY_STRING = ""
@@ -30,3 +35,7 @@ let EMPTY_STRING = ""
 let LOCATION = "location"
 let RESULT = "result"
 let NAME = "name"
+
+// UITextField Placholders
+let ENTER_USER_NAME = "Enter username"
+let ENTER_PASSWORD = "Enter password"

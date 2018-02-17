@@ -22,7 +22,11 @@ extension MainMenuVC: CLLocationManagerDelegate {
         
         
         if mapView.isHidden {
-            mapView.isHidden = false
+            UIView.animate(withDuration: 0.5, animations: {
+                loadingView.alpha = 0
+                refreshIndicator.stopAnimating()
+                self.mapView.isHidden = false
+            })
             mapView.camera = camera
         } else {
             mapView.animate(to: camera)

@@ -122,8 +122,8 @@
                     <connections>
                         <outlet property="loginButton" destination="V1g-Zy-dUw" id="SlR-cV-ony"/>
                         <outlet property="logoLabel" destination="GHB-Bc-OBW" id="JFr-H2-VpZ"/>
+                        <outlet property="passwordTextField" destination="X0U-4Z-O1z" id="Yzc-j9-85B"/>
                         <outlet property="signupButton" destination="NEF-PX-XE4" id="yGz-YE-LRg"/>
-                        <outlet property="usermailTextField" destination="X0U-4Z-O1z" id="Nsk-ro-x6y"/>
                         <outlet property="usernameTextField" destination="4AH-Ls-6SD" id="5np-5I-DN9"/>
                         <segue destination="ZEX-dJ-FP5" kind="presentation" identifier="MainMenuVCSegue" id="vjo-uj-5Nf"/>
                         <segue destination="GjX-iy-dyc" kind="presentation" identifier="SignupVCSegue" modalTransitionStyle="flipHorizontal" id="Tdr-p1-ryA"/>
