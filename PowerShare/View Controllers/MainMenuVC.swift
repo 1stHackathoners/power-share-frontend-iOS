@@ -30,17 +30,14 @@ class MainMenuVC: UIViewController, SideMenuDelegate {
         navigationItem.title = "Locate a power station"
         
         inititateLocationManager()
+        
         sideMenu = SideMenu(controllingViewController: self)
         self.currentLocation = locationManager.location
         
         if let currentLocation = locationManager.location?.coordinate{
-            
-            print(currentLocation.latitude)
-            print(currentLocation.longitude)
-            
             let camera = GMSCameraPosition.camera(withLatitude: currentLocation.latitude, longitude: currentLocation.longitude, zoom: zoomLevel)
             mapView = GMSMapView.map(withFrame: view.bounds, camera: camera)
-            //mapView.settings.myLocationButton = true
+            mapView.settings.myLocationButton = true
             mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
             mapView.selectedMarker = createMapMarker(markerTitle: YOUR_CURRENT_POS, latitude: currentLocation.latitude, longitude: currentLocation.longitude)
             mapView.isHidden = true
@@ -57,7 +54,7 @@ class MainMenuVC: UIViewController, SideMenuDelegate {
             fetchData()
             
         } else {
-            print("YES 1")
+            //logout and go to the login screen 
         }
     }
     
@@ -106,7 +103,7 @@ class MainMenuVC: UIViewController, SideMenuDelegate {
                 let json = try JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary
                 
                 if let json = json {
-                    print(json)
+                    //print(json)
                     if let results = json.value(forKey: RESULT) as? NSArray{
                         
                         for result in results{

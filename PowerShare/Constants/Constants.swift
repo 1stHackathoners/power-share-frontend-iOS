@@ -15,8 +15,12 @@ let AVENIR_NEXT_ITALIC = "AvenirNext-Italic"
 let MENU_ICON = "MenuIcon"
 let DEFAULT_PROFILE_IMAGE = "DefaultProfileImage"
 
-// Strings
+// Segues
+let SIGN_IN_VC_SEGUE = "SigninVCSegue"
+let LOG_IN_VC_SEGUE = "LoginVCSegue"
+let MAIN_MENU_VC_SEGUE = "MainMenuVCSegue"
 
+// Strings
 let YOUR_CURRENT_POS = "Your current position"
 let FOOTER_NAME = "PowerShare "
 let FOOTER_YEAR = "2018"
