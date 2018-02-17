@@ -24,6 +24,7 @@ let MAIN_MENU_VC_SEGUE = "MainMenuVCSegue"
 let YOUR_CURRENT_POS = "Your current position"
 let FOOTER_NAME = "PowerShare "
 let FOOTER_YEAR = "2018"
+let EMPTY_STRING = ""
 
 // Json Constants
 let LOCATION = "location"

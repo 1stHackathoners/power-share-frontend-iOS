@@ -52,9 +52,8 @@ class MainMenuVC: UIViewController, SideMenuDelegate {
     func handleSideMenuOptions(selection: Int) {
         if selection == 0{
             fetchData()
-            
         } else {
-            //logout and go to the login screen 
+            performSegue(withIdentifier: LOG_IN_VC_SEGUE, sender: self)
         }
     }
     

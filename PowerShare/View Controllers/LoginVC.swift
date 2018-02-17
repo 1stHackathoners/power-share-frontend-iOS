@@ -85,6 +85,9 @@ class LoginVC: UIViewController, UITextFieldDelegate {
     //MARK: Actions
     @IBAction func loginButtonPressed(_ sender: UIButton) {
         //fetch data here and fake authenticate :D
+        
+        //do some checking and then let the user to get in
+        performSegue(withIdentifier: MAIN_MENU_VC_SEGUE, sender: self)
     }
     
     //MARK: TextField Handling

@@ -21,6 +21,7 @@
 		C7725373203786120095320A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C7725371203786120095320A /* LaunchScreen.storyboard */; };
 		C77DE1B520380BB20067F5F3 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77DE1B420380BB20067F5F3 /* LoginVC.swift */; };
 		C77DE1B720380BD10067F5F3 /* SigninVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77DE1B620380BD10067F5F3 /* SigninVC.swift */; };
+		C77DE1B9203813050067F5F3 /* UITextFieldExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77DE1B8203813050067F5F3 /* UITextFieldExt.swift */; };
 		C790EEB32037C716007B0557 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C790EEB22037C716007B0557 /* Constants.swift */; };
 		C790EEB62037D409007B0557 /* UIImageViewExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = C790EEB52037D409007B0557 /* UIImageViewExt.swift */; };
 /* End PBXBuildFile section */
@@ -44,6 +45,7 @@
 		C7725374203786120095320A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C77DE1B420380BB20067F5F3 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		C77DE1B620380BD10067F5F3 /* SigninVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SigninVC.swift; sourceTree = "<group>"; };
+		C77DE1B8203813050067F5F3 /* UITextFieldExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextFieldExt.swift; sourceTree = "<group>"; };
 		C790EEB22037C716007B0557 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		C790EEB52037D409007B0557 /* UIImageViewExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageViewExt.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -113,9 +115,9 @@
 		C754CDFD20380B2A005F93AA /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				C772536A203786120095320A /* MainMenuVC.swift */,
 				C77DE1B420380BB20067F5F3 /* LoginVC.swift */,
 				C77DE1B620380BD10067F5F3 /* SigninVC.swift */,
+				C772536A203786120095320A /* MainMenuVC.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -162,6 +164,7 @@
 			children = (
 				C743C77720378D77002F22EF /* MainMenuExt.swift */,
 				C790EEB52037D409007B0557 /* UIImageViewExt.swift */,
+				C77DE1B8203813050067F5F3 /* UITextFieldExt.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -316,6 +319,7 @@
 				C790EEB32037C716007B0557 /* Constants.swift in Sources */,
 				C77DE1B720380BD10067F5F3 /* SigninVC.swift in Sources */,
 				C754CDF62037E563005F93AA /* CustomAlertControllerProtocol.swift in Sources */,
+				C77DE1B9203813050067F5F3 /* UITextFieldExt.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
