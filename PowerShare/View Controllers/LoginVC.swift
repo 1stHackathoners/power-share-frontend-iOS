@@ -87,6 +87,7 @@ class LoginVC: UIViewController, UITextFieldDelegate {
         // setting delegates
         usernameTextField.delegate = self
         passwordTextField.delegate = self
+        view.addSubview(loadingView)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -138,8 +139,26 @@ class LoginVC: UIViewController, UITextFieldDelegate {
         view.endEditing(true)
         
         if usernameTextField.text != EMPTY_STRING && passwordTextField.text != EMPTY_STRING{
+            UIView.animate(withDuration: 0.5, animations: {
+                loadingView.alpha = 1
+                refreshIndicator.startAnimating()
+            })
+            
             //do some checking and then let the user to get in
-            performSegue(withIdentifier: MAIN_MENU_VC_SEGUE, sender: self)
+            fetchUser(username: usernameTextField.text!, completion: { (password) in
+                UIView.animate(withDuration: 0.5, animations: {
+                    loadingView.alpha = 0
+                    refreshIndicator.startAnimating()
+                })
+                
+                if password == self.passwordTextField.text{
+                    self.performSegue(withIdentifier: MAIN_MENU_VC_SEGUE, sender: self)
+                } else {
+                    // alert
+                    alert = CustomAlertController(message: "Upsss!", description: "Password is incorrect. Try again.", buttonTitle: "OK", shouldVibrate: false)
+                    alert.show()
+                }
+            })
         } else {
             // alert
             alert = CustomAlertController(message: "Upsss!", description: "Fields cannot left blank.", buttonTitle: "OK", shouldVibrate: false)

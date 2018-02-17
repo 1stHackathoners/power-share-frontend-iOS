@@ -35,6 +35,7 @@ let EMPTY_STRING = ""
 let LOCATION = "location"
 let RESULT = "result"
 let NAME = "name"
+let PASSWORD = "password"
 
 // UITextField Placholders
 let ENTER_USER_NAME = "Enter username"

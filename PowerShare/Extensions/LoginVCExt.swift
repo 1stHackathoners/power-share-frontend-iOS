@@ -92,5 +92,51 @@ extension LoginVC{
             return newString.count <= 20
         }
     }
-
+    
+    // fetching user data
+    
+    func fetchUser(username: String, completion: @escaping (_ password: String) -> ()){
+        let url = URL(string: "https://power-share-hackathon.herokuapp.com/user/info")
+        var request = URLRequest(url: url!)
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "POST"
+        
+        let postString = "username=\(username)"
+        
+        request.httpBody = postString.data(using: .utf8)
+        
+        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+            guard let data = data, error == nil else {
+                print("error=\(String(describing: error))")
+                DispatchQueue.main.async {
+                    //showing an alert if something goes wrong
+                    let alert = UIAlertController(title: "Upsss!", message: "The load has been added to the completion queue. This will be processed once there is a connection.", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default))
+                    self.present(alert, animated: true, completion: nil)
+                }
+                return
+            }
+            
+            if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {
+                print("statusCode should be 200, but is \(httpStatus.statusCode)")
+                print("response = \(String(describing: response))")
+            }
+            
+            do{
+                let json = try JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary
+                
+                if let json = json{
+                    DispatchQueue.main.async {
+                        guard let password = json.value(forKey: PASSWORD) as? String else { return }
+                        completion(password)
+                    }
+                }
+                
+            } catch {
+                print(error)
+            }
+         
+        }
+        task.resume()
+    }
 }
