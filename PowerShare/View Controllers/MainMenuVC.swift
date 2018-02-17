@@ -16,6 +16,7 @@ class MainMenuVC: UIViewController, SideMenuDelegate {
     //MARK: Properties
     var locationManager: CLLocationManager!
     var currentLocation: CLLocation?
+    var destinationLocation: CLLocationCoordinate2D?
     var mapView: GMSMapView!
     var placesClient: GMSPlacesClient!
     var zoomLevel: Float = 15
@@ -43,10 +44,12 @@ class MainMenuVC: UIViewController, SideMenuDelegate {
             let camera = GMSCameraPosition.camera(withLatitude: currentLocation.latitude, longitude: currentLocation.longitude, zoom: zoomLevel)
             mapView = GMSMapView.map(withFrame: view.bounds, camera: camera)
             mapView.settings.myLocationButton = true
+            mapView.delegate = self
             mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
             mapView.selectedMarker = createMapMarker(markerTitle: YOUR_CURRENT_POS, latitude: currentLocation.latitude, longitude: currentLocation.longitude)
             mapView.isHidden = true
             view.addSubview(mapView)
+            view.addSubview(loadingView)
         }
     }
     
@@ -138,7 +141,6 @@ class MainMenuVC: UIViewController, SideMenuDelegate {
                 
                 DispatchQueue.main.async {
                     // adding markers on the map
-                    
                     let markerIconView = UIView(frame: CGRect(x: 0, y: 0, width: 36, height: 36))
                     markerIconView.layer.cornerRadius = 10
                     markerIconView.backgroundColor = UIColor.clear
@@ -146,8 +148,8 @@ class MainMenuVC: UIViewController, SideMenuDelegate {
                     imageView.image = UIImage(named: "PowerStationIcon")
                     markerIconView.addSubview(imageView)
                     markerIconView.tintColor = UIColor.red
+                    
                     for marker in self.markers{
-                        print("KOYARUM")
                         marker.map = self.mapView
                         marker.iconView = markerIconView
                     }

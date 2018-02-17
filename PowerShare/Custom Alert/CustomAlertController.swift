@@ -105,7 +105,7 @@ class CustomAlertController{
     
     //Init 2 (with 2 buttons)
     init(message: String, description: String, dismissButtonName: String, demandButtonName: String, shouldVibrate: Bool, optionsHandlingViewController: UIViewController?){
-        isVibrationEnabled = true
+        isVibrationEnabled = shouldVibrate
         alertOption = true
         if let optionsHandlingViewController = optionsHandlingViewController{
             self.controllingViewController = optionsHandlingViewController
