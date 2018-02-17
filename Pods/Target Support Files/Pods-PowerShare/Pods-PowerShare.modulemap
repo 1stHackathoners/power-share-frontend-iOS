@@ -1,0 +1,6 @@
+framework module Pods_PowerShare {
+  umbrella header "Pods-PowerShare-umbrella.h"
+
+  export *
+  module * { export * }
+}
