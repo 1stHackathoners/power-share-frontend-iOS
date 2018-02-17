@@ -27,7 +27,7 @@ extension UITextField{
     func addCharacterCounter(counterLabel: UILabel, rightPadding: CGFloat){
         counterLabel.frame = CGRect(x: self.frame.width - rightPadding , y: 0, width: 20, height: 20)
         rightViewMode = .whileEditing
-        counterLabel.textColor = UIColor.white
+        counterLabel.textColor = UIColor.green
         counterLabel.font = UIFont(name: AVENIR_NEXT_REGULAR, size: 12)!
         rightView = counterLabel
     }

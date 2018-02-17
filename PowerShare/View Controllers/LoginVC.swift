@@ -24,11 +24,19 @@ class LoginVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var usernameTextField: UITextField!{
         didSet{
             usernameTextField.placeholder = "Enter user name"
+            usernameTextField.tag = 1
+            usermailTextField.returnKeyType = .continue
+            usernameTextField.addCharacterCounter(counterLabel: counterLabel, rightPadding: 0)
+            
         }
     }
     @IBOutlet weak var usermailTextField: UITextField!{
         didSet{
-            usermailTextField.placeholder = "Enter user mail"
+            usermailTextField.placeholder = "Enter user password"
+            usermailTextField.tag = 2
+            usermailTextField.isSecureTextEntry = true
+            usermailTextField.returnKeyType = .go
+            usermailTextField.addCharacterCounter(counterLabel: counterLabel, rightPadding: 0)
         }
     }
     @IBOutlet weak var loginButton: UIButton!{
@@ -44,18 +52,48 @@ class LoginVC: UIViewController, UITextFieldDelegate {
         }
     }
     
-    //MARK: Methods
+    @IBOutlet weak var signupButton: UIButton!{
+        didSet{
+            let attributedString1 = NSMutableAttributedString(string: "Don't have an account? ", attributes: [NSAttributedStringKey.font: UIFont(name: AVENIR_NEXT_REGULAR, size: 15)!, NSAttributedStringKey.foregroundColor: UIColor.green])
+            
+            let attributedString2 = NSMutableAttributedString(string: "Sign up now.", attributes: [NSAttributedStringKey.font: UIFont(name: AVENIR_NEXT_DEMI_BOLD, size: 15)!, NSAttributedStringKey.foregroundColor: UIColor.green])
+            
+            attributedString1.append(attributedString2)
+            
+            signupButton.setAttributedTitle(attributedString1, for: .normal)
+            signupButton.backgroundColor = UIColor.clear
+            signupButton.titleLabel?.adjustsFontSizeToFitWidth = true
+            signupButton.titleLabel?.minimumScaleFactor = 10 / UIFont.labelFontSize
+        }
+    }
     
+    var currentylActiveKeyboard: UITextField?
+    var keyboardHeight: CGFloat!
+    let emptySpacePt: CGFloat = 35
+    
+    //MARK: Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         usernameTextField.delegate = self
         usermailTextField.delegate = self
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        // remove observers
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setAlphasForFadingINAnimation()
         animateLoginScreen()
+        
+        // add observers
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
     //MARK: Animations
@@ -84,23 +122,94 @@ class LoginVC: UIViewController, UITextFieldDelegate {
     
     //MARK: Actions
     @IBAction func loginButtonPressed(_ sender: UIButton) {
-        //fetch data here and fake authenticate :D
-        
-        //do some checking and then let the user to get in
-        performSegue(withIdentifier: MAIN_MENU_VC_SEGUE, sender: self)
+        if usernameTextField.text != EMPTY_STRING && usermailTextField.text != EMPTY_STRING{
+            //do some checking and then let the user to get in
+            performSegue(withIdentifier: MAIN_MENU_VC_SEGUE, sender: self)
+        } else {
+            alert = CustomAlertController(message: "Upsss!", description: "Fields cannot left blank.", buttonTitle: "OK", shouldVibrate: false)
+            alert.show()
+        }
     }
+    
+    @IBAction func signupButtonPressed(_ sender: UIButton) {
+        performSegue(withIdentifier: SIGN_UP_VC_SEGUE, sender: self)
+    }
+    
     
     //MARK: TextField Handling
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    @objc func keyboardWillShow(_ notification: Notification) {
+        if let keyboardFrame: NSValue = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            keyboardHeight = self.view.frame.size.height - keyboardRectangle.height
+            
+            if let activeKeyboard = currentylActiveKeyboard{
+                if activeKeyboard.frame.origin.y > self.keyboardHeight - self.emptySpacePt{
+                    UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+                        self.view.frame.origin.y -= (activeKeyboard.frame.origin.y - (self.keyboardHeight - self.emptySpacePt))
+                    }, completion: nil)
+                }
+            }
+        } else {
+            if let activeKeyboard = currentylActiveKeyboard ,let keybHeight = keyboardHeight{
+                if activeKeyboard.frame.origin.y > keybHeight - emptySpacePt{
+                    UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+                        self.view.frame.origin.y -= (activeKeyboard.frame.origin.y - (keybHeight - self.emptySpacePt))
+                    }, completion: nil)
+                } else {
+                    UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+                        self.view.frame.origin.y = 0
+                    }, completion: nil)
+                }
+            }
+        }
+    }
+    
+    @objc func keyboardWillHide(_ notification: Notification) {
+        if view.frame.minY < 0{
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+                self.view.frame.origin.y = 0
+            }, completion: nil)
+        }
+    }
+    
+    internal override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        currentylActiveKeyboard = nil
         view.endEditing(true)
     }
     
     internal func textFieldDidBeginEditing(_ textField: UITextField) {
-        textField.becomeFirstResponder()
+        currentylActiveKeyboard = textField
+        keyboardWillShow(Notification(name: NSNotification.Name.UIKeyboardWillShow))
+        
+        if let characterCount = textField.text?.count {
+            if textField.tag == 1{
+                counterLabel.text = String(40 - characterCount)
+            } else {
+                counterLabel.text = String(20 - characterCount)
+            }
+        }
     }
     
-    internal func textFieldDidEndEditing(_ textField: UITextField) {
+    internal func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField.returnKeyType == .continue{
+            usermailTextField.becomeFirstResponder()
+        } else if textField.returnKeyType == .go {
+            loginButtonPressed(loginButton)
+        }
         textField.resignFirstResponder()
+        currentylActiveKeyboard = nil
+        return true
     }
-}
+    
+    internal func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let newString = NSString(string: textField.text!).replacingCharacters(in: range, with: string)
+        
+        if textField.tag == 1{
+            counterLabel.text = newString.count == 41 ? String(0) : String(40 - newString.count)
+            return newString.count <= 40
+        } else {
+            counterLabel.text = newString.count == 21 ? String(0) : String(20 - newString.count)
+            return newString.count <= 20
+        }
+    }}

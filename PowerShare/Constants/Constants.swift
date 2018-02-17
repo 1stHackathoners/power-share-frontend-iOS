@@ -16,7 +16,7 @@ let MENU_ICON = "MenuIcon"
 let DEFAULT_PROFILE_IMAGE = "DefaultProfileImage"
 
 // Segues
-let SIGN_IN_VC_SEGUE = "SigninVCSegue"
+let SIGN_UP_VC_SEGUE = "SignupVCSegue"
 let LOG_IN_VC_SEGUE = "LoginVCSegue"
 let MAIN_MENU_VC_SEGUE = "MainMenuVCSegue"
 

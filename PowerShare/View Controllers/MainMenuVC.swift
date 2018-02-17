@@ -31,7 +31,6 @@ class MainMenuVC: UIViewController, SideMenuDelegate {
         
         inititateLocationManager()
         
-        sideMenu = SideMenu(controllingViewController: self)
         self.currentLocation = locationManager.location
         
         if let currentLocation = locationManager.location?.coordinate{
@@ -43,7 +42,12 @@ class MainMenuVC: UIViewController, SideMenuDelegate {
             mapView.isHidden = true
             view.addSubview(mapView)
         }
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // initiating side menu
+        sideMenu = SideMenu(controllingViewController: self)
         fetchData()
     }
     
@@ -124,11 +128,13 @@ class MainMenuVC: UIViewController, SideMenuDelegate {
                 DispatchQueue.main.async {
                     // adding markers on the map
                     
-                    let markerIconView = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+                    let markerIconView = UIView(frame: CGRect(x: 0, y: 0, width: 36, height: 36))
                     markerIconView.layer.cornerRadius = 10
-                    markerIconView.backgroundColor = UIColor.green
-                    markerIconView.layer.borderWidth = 1
-                    markerIconView.layer.borderColor = UIColor.blue.cgColor
+                    markerIconView.backgroundColor = UIColor.clear
+                    let imageView = UIImageView(frame: markerIconView.frame)
+                    imageView.image = UIImage(named: "PowerStationIcon")
+                    markerIconView.addSubview(imageView)
+                    markerIconView.tintColor = UIColor.red
                     
                     for marker in self.markers{
                         marker.map = self.mapView

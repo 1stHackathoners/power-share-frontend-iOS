@@ -88,19 +88,32 @@
                                     <action selector="loginButtonPressed:" destination="rKM-s0-DwE" eventType="touchUpInside" id="ONU-30-Wmz"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NEF-PX-XE4">
+                                <rect key="frame" x="16" y="617" width="343" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="v5z-IW-bUS"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="signupButtonPressed:" destination="rKM-s0-DwE" eventType="touchUpInside" id="9hb-Xa-38b"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="X0U-4Z-O1z" firstAttribute="leading" secondItem="tUr-Y0-fzQ" secondAttribute="leading" constant="16" id="0pM-pY-Ug6"/>
                             <constraint firstItem="tUr-Y0-fzQ" firstAttribute="trailing" secondItem="X0U-4Z-O1z" secondAttribute="trailing" constant="16" id="2WN-XN-9Nc"/>
                             <constraint firstItem="V1g-Zy-dUw" firstAttribute="top" secondItem="X0U-4Z-O1z" secondAttribute="bottom" constant="16" id="38F-oq-GkD"/>
+                            <constraint firstItem="tUr-Y0-fzQ" firstAttribute="trailing" secondItem="NEF-PX-XE4" secondAttribute="trailing" constant="16" id="7V0-1d-q9Q"/>
                             <constraint firstItem="X0U-4Z-O1z" firstAttribute="top" secondItem="4AH-Ls-6SD" secondAttribute="bottom" constant="8" id="9ze-Yr-3vi"/>
                             <constraint firstItem="tUr-Y0-fzQ" firstAttribute="trailing" secondItem="V1g-Zy-dUw" secondAttribute="trailing" constant="16" id="D7f-n5-k54"/>
                             <constraint firstItem="V1g-Zy-dUw" firstAttribute="leading" secondItem="tUr-Y0-fzQ" secondAttribute="leading" constant="16" id="Icg-z4-zqB"/>
+                            <constraint firstItem="NEF-PX-XE4" firstAttribute="leading" secondItem="tUr-Y0-fzQ" secondAttribute="leading" constant="16" id="OBd-H1-vPy"/>
                             <constraint firstItem="GHB-Bc-OBW" firstAttribute="top" secondItem="tUr-Y0-fzQ" secondAttribute="top" constant="75" id="Xo2-Ay-KLm"/>
                             <constraint firstItem="GHB-Bc-OBW" firstAttribute="leading" secondItem="tUr-Y0-fzQ" secondAttribute="leading" constant="16" id="bNj-2f-uie"/>
                             <constraint firstItem="4AH-Ls-6SD" firstAttribute="leading" secondItem="tUr-Y0-fzQ" secondAttribute="leading" constant="16" id="bU0-2c-O3k"/>
                             <constraint firstItem="tUr-Y0-fzQ" firstAttribute="trailing" secondItem="GHB-Bc-OBW" secondAttribute="trailing" constant="16" id="cmI-hy-HCk"/>
+                            <constraint firstItem="tUr-Y0-fzQ" firstAttribute="bottom" secondItem="NEF-PX-XE4" secondAttribute="bottom" constant="20" id="ksP-da-Xgs"/>
                             <constraint firstItem="4AH-Ls-6SD" firstAttribute="top" secondItem="GHB-Bc-OBW" secondAttribute="bottom" constant="100" id="uyi-EN-SkC"/>
                             <constraint firstItem="tUr-Y0-fzQ" firstAttribute="trailing" secondItem="4AH-Ls-6SD" secondAttribute="trailing" constant="16" id="wCZ-DJ-qHP"/>
                         </constraints>
@@ -109,15 +122,16 @@
                     <connections>
                         <outlet property="loginButton" destination="V1g-Zy-dUw" id="SlR-cV-ony"/>
                         <outlet property="logoLabel" destination="GHB-Bc-OBW" id="JFr-H2-VpZ"/>
+                        <outlet property="signupButton" destination="NEF-PX-XE4" id="yGz-YE-LRg"/>
                         <outlet property="usermailTextField" destination="X0U-4Z-O1z" id="Nsk-ro-x6y"/>
                         <outlet property="usernameTextField" destination="4AH-Ls-6SD" id="5np-5I-DN9"/>
                         <segue destination="ZEX-dJ-FP5" kind="presentation" identifier="MainMenuVCSegue" id="vjo-uj-5Nf"/>
-                        <segue destination="GjX-iy-dyc" kind="presentation" identifier="SigninVCSegue" id="Tdr-p1-ryA"/>
+                        <segue destination="GjX-iy-dyc" kind="presentation" identifier="SignupVCSegue" modalTransitionStyle="flipHorizontal" id="Tdr-p1-ryA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YSt-da-Gg3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-178.5" y="-1397.5"/>
+            <point key="canvasLocation" x="-180" y="-1398.3508245877063"/>
         </scene>
         <!--SigninVC-->
         <scene sceneID="KYD-Iw-ci2">
