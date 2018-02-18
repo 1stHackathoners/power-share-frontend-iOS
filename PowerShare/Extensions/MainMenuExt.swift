@@ -8,7 +8,6 @@
 
 import UIKit
 import CoreLocation
-import GooglePlaces
 import GoogleMaps
 
 extension MainMenuVC: CLLocationManagerDelegate, GMSMapViewDelegate, CustomAlertControllerDelegate {
@@ -18,14 +17,13 @@ extension MainMenuVC: CLLocationManagerDelegate, GMSMapViewDelegate, CustomAlert
         let location: CLLocation = locations.last!
         print("Location: \(location)")
         
-        // update current location
+        // update the current location
         currentLocation = location
         
-        //check if arrived to a station
+        //check if arrived to a station (by default in order to see 200 metres will be assumed to be there.
         if let destinationLocation = destinationLocation{
-            let destinationLocationAsLocation = CLLocation(latitude: destinationLocation.latitude, longitude: destinationLocation.longitude)
-            let distance = location.distance(from: destinationLocationAsLocation)
-            
+            let distance = location.distance(from: destinationLocation)
+        
             
             //the distance for now is assummed
             if distance < 200 {
@@ -36,13 +34,14 @@ extension MainMenuVC: CLLocationManagerDelegate, GMSMapViewDelegate, CustomAlert
                     alert.show()
                 }
             }
-            
         } else {
-            print("No destination location has been yet to set!")
+            print("No destination location has been set!")
         }
         
-        // update marker
+        
+        // update marker on the map (walking man icon)
         currentMarker.position = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+        
         
         if mapView.isHidden {
             UIView.animate(withDuration: 0.5, animations: {
@@ -92,8 +91,7 @@ extension MainMenuVC: CLLocationManagerDelegate, GMSMapViewDelegate, CustomAlert
         
         if let myLocation = currentLocation?.coordinate{
             if marker.position.latitude != myLocation.latitude && marker.position.longitude != myLocation.longitude{
-                destinationLocation = marker.position
-                
+                temporaryDestinationLocation = CLLocation(latitude: marker.position.latitude, longitude: marker.position.longitude)
                 alert = CustomAlertController(message: "Hey", description: "Do you want to go to \(marker.title!)", dismissButtonName: "No", demandButtonName: "Yes", shouldVibrate: false, optionsHandlingViewController: self)
                 alert.show()
                 
@@ -111,7 +109,7 @@ extension MainMenuVC: CLLocationManagerDelegate, GMSMapViewDelegate, CustomAlert
         print("Error: \(error)")
     }
     
-    // initiate location manager
+    // Initiate location manager
     func inititateLocationManager(){
         locationManager = CLLocationManager()
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -121,7 +119,7 @@ extension MainMenuVC: CLLocationManagerDelegate, GMSMapViewDelegate, CustomAlert
         locationManager.delegate = self
     }
     
-    // create a map marker
+    // Create a map marker
     func createMapMarker(markerTitle: String, latitude: CLLocationDegrees, longitude: CLLocationDegrees) -> GMSMarker{
         let marker = GMSMarker()
         marker.title = markerTitle
@@ -130,22 +128,38 @@ extension MainMenuVC: CLLocationManagerDelegate, GMSMapViewDelegate, CustomAlert
         return marker
     }
     
+    // Handling Alert Options
     func handleAlertOptionsForButtons(option: Int) {
         if !chooseAlertHandler {
             if option == 1{
-                guard let destLocation = destinationLocation else { return }
-                guard let sourceLocation = currentLocation?.coordinate else { return }
+                destinationLocation = CLLocation(latitude: temporaryDestinationLocation!.coordinate.latitude, longitude: temporaryDestinationLocation!.coordinate.longitude)
+                guard let destLocation = destinationLocation?.coordinate else { return }
+                guard let srcLocation = currentLocation?.coordinate else { return }
                 
                 //clearing the path if there is any
                 if polyline != nil {
                     polyline.map = nil
                 }
                 
-                getPolylineRoute(from: sourceLocation, to: destLocation)
+                getPolylineRoute(from: srcLocation, to: destLocation)
             }
         } else {
             if option == 1{
                 print("Loading started or ended!")
+                if timeStart{
+                    startTime = Date()
+                    timeStart = false
+                } else {
+                    endTime = Date()
+                    let timeInterval: Double = endTime.timeIntervalSince(startTime)
+                    let totalCost = (timeInterval / 60) * 0.25 //TL per minute
+                    if let user = user{
+                        user.totalCredit -= totalCost
+                        sideMenu.totalCreditLabel.text = "You have $\(user.totalCredit) left."
+                        print("Transaction finished!")
+                    }
+                    timeStart = true
+                }
             } else {
                 print("Loading declined!")
             }

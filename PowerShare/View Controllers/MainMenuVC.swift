@@ -22,17 +22,23 @@ class MainMenuVC: UIViewController, SideMenuDelegate {
     var currentMarker: GMSMarker!
     
     var currentLocation: CLLocation?
-    var destinationLocation: CLLocationCoordinate2D?
+    var destinationLocation: CLLocation?
+    var temporaryDestinationLocation: CLLocation?
 
     var sideMenu: SideMenu!
     
     var chooseAlertHandler = false
     var alerted = false
     
+    var startTime: Date!
+    var endTime: Date!
+    var timeStart = true
+    
     //MARK: Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        UIApplication.shared.statusBarStyle = .lightContent
         //generalize those later
         navigationItem.title = "Locate a power station"
         

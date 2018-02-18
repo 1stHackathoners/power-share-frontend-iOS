@@ -129,7 +129,7 @@ extension LoginVC{
                     DispatchQueue.main.async {
                         guard let password = json.value(forKey: PASSWORD) as? String else { return }
                         guard let username = json.value(forKey: NAME) as? String else { return }
-                        guard let totalCredit = json.value(forKey: TOTAL_CREDIT) as? Int else { return }
+                        guard let totalCredit = json.value(forKey: TOTAL_CREDIT) as? Double else { return }
                         
                         user = User(username: username, password: password, totalCredit: totalCredit)
                         

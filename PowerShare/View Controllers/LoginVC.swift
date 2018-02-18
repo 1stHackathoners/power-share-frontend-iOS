@@ -84,6 +84,7 @@ class LoginVC: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        UIApplication.shared.statusBarStyle = .default
         // setting delegates
         usernameTextField.delegate = self
         passwordTextField.delegate = self

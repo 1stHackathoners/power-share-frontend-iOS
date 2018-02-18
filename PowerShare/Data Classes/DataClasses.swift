@@ -12,16 +12,22 @@ import CoreLocation
 class User{
     let username: String
     let password: String
-    let totalCredit: Int
+    var totalCredit: Double
     
-    init(username: String, password: String, totalCredit: Int) {
+    init(username: String, password: String, totalCredit: Double) {
         self.username = username
         self.password = password
         self.totalCredit = totalCredit
     }
 }
 
-struct SrcDesLocation{
-    var sourceLocation: CLLocation
-    var destinationLocation: CLLocation
+struct TotalCost{
+    var startTime: Date
+    var endTime: Date
+    var totalCost: Double
+    
+    func calculateCost(){
+        
+    }
+    
 }
