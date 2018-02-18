@@ -8,7 +8,8 @@
 
 import UIKit
 
-extension SigninVC{
+extension SigninVC: CustomAlertControllerDelegate{
+
     //MARK: TextField Handling
     
     @objc func keyboardWillShow(_ notification: Notification) {
@@ -104,7 +105,10 @@ extension SigninVC{
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
         
-        let postString = "username=\(username)&=password=\(password)"
+        
+        print(username)
+        print(password)
+        let postString = "username=\(username)&password=\(password)"
         
         request.httpBody = postString.data(using: .utf8)
         
@@ -128,7 +132,16 @@ extension SigninVC{
             do{
                 let json = try JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary
                 
+                
                 DispatchQueue.main.async {
+                    if let message = json?.value(forKey: "msg") as? String, let statCode = json?.value(forKey: "code") as? Int{
+                        print(message)
+                        if statCode == 1 {
+                            self.dismiss(animated: true, completion: nil)
+                        }
+                        
+                    }
+
                     UIView.animate(withDuration: 0.5, animations: {
                         loadingView.alpha = 0
                         refreshIndicator.stopAnimating()
@@ -140,6 +153,12 @@ extension SigninVC{
             }
         }
         task.resume()
+    }
+    
+    func handleAlertOptionsForButtons(option: Int) {
+        if option == 1{
+            dismiss(animated: true, completion: nil)
+        }
     }
     
 }
