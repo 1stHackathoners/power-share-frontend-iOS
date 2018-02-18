@@ -16,13 +16,33 @@ extension MainMenuVC: CLLocationManagerDelegate, GMSMapViewDelegate, CustomAlert
     // Handle incoming location events.
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let location: CLLocation = locations.last!
+        print("Location: \(location)")
         
         // update current location
         currentLocation = location
         
-        print("Location: \(location)")
+        //check if arrived to a station
+        if let destinationLocation = destinationLocation{
+            let destinationLocationAsLocation = CLLocation(latitude: destinationLocation.latitude, longitude: destinationLocation.longitude)
+            let distance = location.distance(from: destinationLocationAsLocation)
+            
+            
+            //the distance for now is assummed
+            if distance < 200 {
+                if !alerted{
+                    alerted = true
+                    chooseAlertHandler = true
+                    alert = CustomAlertController(message: "Look", description: "You have arrived to the power station. Hit enter to start loading your device or decline to reject.", dismissButtonName: "Decline", demandButtonName: "Accept", shouldVibrate: false, optionsHandlingViewController: self)
+                    alert.show()
+                }
+            }
+            
+        } else {
+            print("No destination location has been yet to set!")
+        }
         
-        let camera = GMSCameraPosition.camera(withLatitude: location.coordinate.latitude, longitude: location.coordinate.longitude, zoom: zoomLevel)
+        // update marker
+        currentMarker.position = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
         
         if mapView.isHidden {
             UIView.animate(withDuration: 0.5, animations: {
@@ -30,9 +50,6 @@ extension MainMenuVC: CLLocationManagerDelegate, GMSMapViewDelegate, CustomAlert
                 refreshIndicator.stopAnimating()
                 self.mapView.isHidden = false
             })
-            mapView.camera = camera
-        } else {
-            mapView.animate(to: camera)
         }
     }
     
@@ -55,7 +72,7 @@ extension MainMenuVC: CLLocationManagerDelegate, GMSMapViewDelegate, CustomAlert
     
     internal func didTapMyLocationButton(for mapView: GMSMapView) -> Bool {
         if let myCurrentLocation = currentLocation?.coordinate{
-            let camera = GMSCameraPosition.camera(withLatitude: myCurrentLocation.latitude, longitude: myCurrentLocation.longitude, zoom: zoomLevel)
+            let camera = GMSCameraPosition.camera(withLatitude: myCurrentLocation.latitude, longitude: myCurrentLocation.longitude, zoom: 30)
             if mapView.isHidden {
                 UIView.animate(withDuration: 0.5, animations: {
                     loadingView.alpha = 0
@@ -76,8 +93,10 @@ extension MainMenuVC: CLLocationManagerDelegate, GMSMapViewDelegate, CustomAlert
         if let myLocation = currentLocation?.coordinate{
             if marker.position.latitude != myLocation.latitude && marker.position.longitude != myLocation.longitude{
                 destinationLocation = marker.position
+                
                 alert = CustomAlertController(message: "Hey", description: "Do you want to go to \(marker.title!)", dismissButtonName: "No", demandButtonName: "Yes", shouldVibrate: false, optionsHandlingViewController: self)
                 alert.show()
+                
             } else {
                 alert = CustomAlertController(message: "Come on 🤪", description: "You cannot go to your location", buttonTitle: "OK", shouldVibrate: false)
                 alert.show()
@@ -97,7 +116,7 @@ extension MainMenuVC: CLLocationManagerDelegate, GMSMapViewDelegate, CustomAlert
         locationManager = CLLocationManager()
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestAlwaysAuthorization()
-        locationManager.distanceFilter = 0.5
+        locationManager.distanceFilter = 5
         locationManager.startUpdatingLocation()
         locationManager.delegate = self
     }
@@ -112,17 +131,29 @@ extension MainMenuVC: CLLocationManagerDelegate, GMSMapViewDelegate, CustomAlert
     }
     
     func handleAlertOptionsForButtons(option: Int) {
-        if option == 1{
-            guard let destLocation = destinationLocation else { return }
-            guard let sourceLocation = currentLocation?.coordinate else { return }
-            
-            //clearing the path if there is any
-            if polyline != nil {
-                polyline.map = nil
+        if !chooseAlertHandler {
+            if option == 1{
+                guard let destLocation = destinationLocation else { return }
+                guard let sourceLocation = currentLocation?.coordinate else { return }
+                
+                //clearing the path if there is any
+                if polyline != nil {
+                    polyline.map = nil
+                }
+                
+                getPolylineRoute(from: sourceLocation, to: destLocation)
             }
-            
-            getPolylineRoute(from: sourceLocation, to: destLocation)
+        } else {
+            if option == 1{
+                print("Loading started or ended!")
+            } else {
+                print("Loading declined!")
+            }
+            destinationLocation = nil
+            chooseAlertHandler = false
+            alerted = false
         }
+        
     }
     
     func getPolylineRoute(from source: CLLocationCoordinate2D, to destination: CLLocationCoordinate2D){

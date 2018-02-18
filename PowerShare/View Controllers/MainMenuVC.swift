@@ -9,20 +9,25 @@
 import UIKit
 import CoreLocation
 import GoogleMaps
-import GooglePlaces
 
 class MainMenuVC: UIViewController, SideMenuDelegate {
     
     //MARK: Properties
     var locationManager: CLLocationManager!
+    var mapView: GMSMapView!
+    var polyline: GMSPolyline!
+    var zoomLevel: Float = 15
+    
+    var markers = [GMSMarker]()
+    var currentMarker: GMSMarker!
+    
     var currentLocation: CLLocation?
     var destinationLocation: CLLocationCoordinate2D?
-    var mapView: GMSMapView!
-    var placesClient: GMSPlacesClient!
-    var zoomLevel: Float = 15
+
     var sideMenu: SideMenu!
-    var markers = [GMSMarker]()
-    var polyline: GMSPolyline!
+    
+    var chooseAlertHandler = false
+    var alerted = false
     
     //MARK: Methods
     
@@ -47,7 +52,12 @@ class MainMenuVC: UIViewController, SideMenuDelegate {
             mapView.settings.myLocationButton = true
             mapView.delegate = self
             mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-            mapView.selectedMarker = createMapMarker(markerTitle: YOUR_CURRENT_POS, latitude: currentLocation.latitude, longitude: currentLocation.longitude)
+            currentMarker = createMapMarker(markerTitle: YOUR_CURRENT_POS, latitude: currentLocation.latitude, longitude: currentLocation.longitude)
+            let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+            imageView.tintColor = UIColor.blue
+            imageView.image = UIImage(named: "RunningGuyIcon")
+            currentMarker.iconView = imageView
+            mapView.selectedMarker = currentMarker
             mapView.isHidden = true
             view.addSubview(mapView)
             view.addSubview(loadingView)

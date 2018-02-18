@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreLocation
 
 class User{
     let username: String
@@ -18,4 +19,9 @@ class User{
         self.password = password
         self.totalCredit = totalCredit
     }
+}
+
+struct SrcDesLocation{
+    var sourceLocation: CLLocation
+    var destinationLocation: CLLocation
 }
