@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreLocation
+import GoogleMaps
 
 class User{
     let username: String
@@ -21,13 +22,40 @@ class User{
     }
 }
 
-struct TotalCost{
+class Stations{
+    let name: String
+    let location: CLLocation
+    var availablePowerbankNum: Int
+    var availableChargePortNum: Int
+    let marker: GMSMarker
+    
+    
+    
+    init(name: String, location: CLLocation, availablePowerBankNum: Int, availableChargePortNum: Int, marker: GMSMarker) {
+        self.name = name
+        self.location = location
+        self.availablePowerbankNum = availablePowerBankNum
+        self.availableChargePortNum = availableChargePortNum
+        self.marker = marker
+    }
+}
+
+class TotalCost{
     var startTime: Date
     var endTime: Date
-    var totalCost: Double
+    var totalCost: Double!
+    let costPerMinute: Double = 0.25 //TL
     
-    func calculateCost(){
-        
+    init(startTime: Date, endTime: Date) {
+        self.startTime = startTime
+        self.endTime = endTime
+        print(startTime)
+        print(endTime)
+        totalCost = (endTime.timeIntervalSince(startTime) / 60) * costPerMinute
+    }
+    
+    func retrieveTotalCost() -> Double{
+        return totalCost
     }
     
 }

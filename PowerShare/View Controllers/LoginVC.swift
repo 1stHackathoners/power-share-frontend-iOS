@@ -116,6 +116,7 @@ class LoginVC: UIViewController, UITextFieldDelegate {
         usernameTextField.alpha = 0
         passwordTextField.alpha = 0
         loginButton.alpha = 0
+        signupButton.alpha = 0
     }
     
     private func animateLoginScreen(){
@@ -130,6 +131,9 @@ class LoginVC: UIViewController, UITextFieldDelegate {
         }, completion: nil)
         UIView.animate(withDuration: 0.5, delay: 0.9, options: .curveLinear, animations: {
             self.loginButton.alpha = 1
+        }, completion: nil)
+        UIView.animate(withDuration: 0.5, delay: 1.2, options: .curveLinear, animations: {
+            self.signupButton.alpha = 1
         }, completion: nil)
     }
     

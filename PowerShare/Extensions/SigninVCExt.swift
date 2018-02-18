@@ -98,13 +98,13 @@ extension SigninVC{
     
     // fetching user data
     
-    func fetchUser(username: String, completion: @escaping (User, Int) -> ()){
-        let url = URL(string: "https://power-share-hackathon.herokuapp.com/user/info")
+    func postUser(username: String, password: String){
+        let url = URL(string: "https://power-share-hackathon.herokuapp.com/user/create")
         var request = URLRequest(url: url!)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
         
-        let postString = "username=\(username)"
+        let postString = "username=\(username)&=password=\(password)"
         
         request.httpBody = postString.data(using: .utf8)
         
@@ -128,28 +128,19 @@ extension SigninVC{
             do{
                 let json = try JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary
                 
-                if let json = json{
-                    DispatchQueue.main.async {
-                        guard let password = json.value(forKey: PASSWORD) as? String else { return }
-                        guard let username = json.value(forKey: NAME) as? String else { return }
-                        guard let totalCredit = json.value(forKey: TOTAL_CREDIT) as? Double else { return }
-                        
-                        user = User(username: username, password: password, totalCredit: totalCredit)
-                        
-                        completion(user!, 1)
-                    }
+                DispatchQueue.main.async {
+                    UIView.animate(withDuration: 0.5, animations: {
+                        loadingView.alpha = 0
+                        refreshIndicator.stopAnimating()
+                    })
                 }
                 
             } catch {
                 print(error)
-                DispatchQueue.main.async {
-                    completion(User(username: EMPTY_STRING, password: EMPTY_STRING, totalCredit: 0), 0)
-                }
             }
-            
         }
         task.resume()
     }
-
+    
 }
 

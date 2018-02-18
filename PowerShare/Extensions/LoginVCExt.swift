@@ -127,13 +127,12 @@ extension LoginVC{
                 
                 if let json = json{
                     DispatchQueue.main.async {
-                        guard let password = json.value(forKey: PASSWORD) as? String else { return }
-                        guard let username = json.value(forKey: NAME) as? String else { return }
-                        guard let totalCredit = json.value(forKey: TOTAL_CREDIT) as? Double else { return }
-                        
-                        user = User(username: username, password: password, totalCredit: totalCredit)
-                        
-                        completion(user!, 1)
+                        if let password = json.value(forKey: PASSWORD) as? String, let username = json.value(forKey: NAME)  as? String, let totalCredit = json.value(forKey: TOTAL_CREDIT) as? Double{
+                            user = User(username: username, password: password, totalCredit: totalCredit)
+                            completion(user!, 1)
+                        } else {
+                            completion(User(username: EMPTY_STRING, password: EMPTY_STRING, totalCredit: 0), 0)
+                        }
                     }
                 }
                 

@@ -53,7 +53,7 @@ class SigninVC: UIViewController, UITextFieldDelegate {
     }
     @IBOutlet weak var userReEnteredPasswordTextField: UITextField!{
         didSet{
-            userReEnteredPasswordTextField.placeholder = ENTER_PASSWORD
+            userReEnteredPasswordTextField.placeholder = "Re enter password"
             userReEnteredPasswordTextField.isSecureTextEntry = true
             userReEnteredPasswordTextField.returnKeyType = .go
             userReEnteredPasswordTextField.autocorrectionType = .no
@@ -103,6 +103,8 @@ class SigninVC: UIViewController, UITextFieldDelegate {
         userNameTextField.delegate = self
         userPasswordTextField.delegate = self
         userReEnteredPasswordTextField.delegate = self
+        
+        view.addSubview(loadingView)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -158,10 +160,19 @@ class SigninVC: UIViewController, UITextFieldDelegate {
     //MARK: Actions
     
     @IBAction func signupButtonPressed(_ sender: UIButton) {
-        if userNameTextField.text != EMPTY_STRING && userPasswordTextField.text != EMPTY_STRING && userReEnteredPasswordTextField.text != EMPTY_STRING{
+        //if any ui elements is active, hide them
+        view.endEditing(true)
+        
+        if userNameTextField.text != EMPTY_STRING && userPasswordTextField.text != EMPTY_STRING &&
+            userReEnteredPasswordTextField.text != EMPTY_STRING{
+            
+            UIView.animate(withDuration: 0.5, animations: {
+                loadingView.alpha = 1
+                refreshIndicator.startAnimating()
+            })
+            
             if userPasswordTextField.text == userReEnteredPasswordTextField.text{
-                
-                // ok create user
+                postUser(username: userNameTextField.text!, password: userPasswordTextField.text!)
             } else {
                 alert = CustomAlertController(message: "Upsss", description: "Passwords should match!", buttonTitle: "OK", shouldVibrate: false)
                 alert.show()

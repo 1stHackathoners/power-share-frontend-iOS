@@ -120,9 +120,13 @@ extension MainMenuVC: CLLocationManagerDelegate, GMSMapViewDelegate, CustomAlert
     }
     
     // Create a map marker
-    func createMapMarker(markerTitle: String, latitude: CLLocationDegrees, longitude: CLLocationDegrees) -> GMSMarker{
+    func createMapMarker(markerTitle: String, snippet: String?, latitude: CLLocationDegrees, longitude: CLLocationDegrees) -> GMSMarker{
         let marker = GMSMarker()
         marker.title = markerTitle
+        if let snippet = snippet{
+            marker.snippet = snippet
+        }
+        
         marker.position = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         marker.map = self.mapView
         return marker
@@ -133,6 +137,7 @@ extension MainMenuVC: CLLocationManagerDelegate, GMSMapViewDelegate, CustomAlert
         if !chooseAlertHandler {
             if option == 1{
                 destinationLocation = CLLocation(latitude: temporaryDestinationLocation!.coordinate.latitude, longitude: temporaryDestinationLocation!.coordinate.longitude)
+                
                 guard let destLocation = destinationLocation?.coordinate else { return }
                 guard let srcLocation = currentLocation?.coordinate else { return }
                 
@@ -140,23 +145,43 @@ extension MainMenuVC: CLLocationManagerDelegate, GMSMapViewDelegate, CustomAlert
                 if polyline != nil {
                     polyline.map = nil
                 }
-                
                 getPolylineRoute(from: srcLocation, to: destLocation)
+            } else {
+                //clearing the path if there is any
+                if polyline != nil {
+                    polyline.map = nil
+                }
             }
         } else {
+            //clearing the path if there is any
+            if polyline != nil {
+                polyline.map = nil
+            }
             if option == 1{
-                print("Loading started or ended!")
                 if timeStart{
-                    startTime = Date()
+                    print("Loading started.")
+                    navigationItem.title = "Choose a power station to drop by"
+                    for station in stations{
+                        if station.location.coordinate.latitude == destinationLocation?.coordinate.latitude && station.location.coordinate.longitude == destinationLocation?.coordinate.longitude{
+                            self.currentStationName = station.name
+                            break
+                        }
+                    }
+                    
+                    if let user = user{
+                        session(username: user.username, changedTo: "true", psName: currentStationName)
+                    }
+                    //startTime = Date()
                     timeStart = false
                 } else {
-                    endTime = Date()
-                    let timeInterval: Double = endTime.timeIntervalSince(startTime)
-                    let totalCost = (timeInterval / 60) * 0.25 //TL per minute
+                    print("Loading ended.")
+                    navigationItem.title = "Locate a power station"
+                    //endTime = Date()
+                    //let cost = TotalCost(startTime: startTime, endTime: endTime)
                     if let user = user{
-                        user.totalCredit -= totalCost
-                        sideMenu.totalCreditLabel.text = "You have $\(user.totalCredit) left."
-                        print("Transaction finished!")
+                        session(username: user.username, changedTo: "false", psName: currentStationName)
+                        //user.totalCredit = user.totalCredit - cost.retrieveTotalCost()
+                        //sideMenu.totalCreditLabel.text = String(format: "You have $ %.2f left", user.totalCredit)
                     }
                     timeStart = true
                 }
