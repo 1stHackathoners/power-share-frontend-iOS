@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		548A84321923663D3C3CF541 /* Pods_PowerShare.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 073DB52C41C2D5F2D7ABA6A5 /* Pods_PowerShare.framework */; };
+		C705F4E62039253B00D75DAD /* SigninVCExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = C705F4E52039253B00D75DAD /* SigninVCExt.swift */; };
 		C743C77820378D77002F22EF /* MainMenuExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = C743C77720378D77002F22EF /* MainMenuExt.swift */; };
 		C754CDF12037E50F005F93AA /* Side Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C754CDF02037E50F005F93AA /* Side Menu.swift */; };
 		C754CDF42037E54B005F93AA /* SideMenuProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C754CDF32037E54B005F93AA /* SideMenuProtocol.swift */; };
@@ -33,6 +34,7 @@
 		073DB52C41C2D5F2D7ABA6A5 /* Pods_PowerShare.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PowerShare.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		57414D4C4353E450F50796E6 /* Pods-PowerShare.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PowerShare.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PowerShare/Pods-PowerShare.debug.xcconfig"; sourceTree = "<group>"; };
 		AD8EE2B6991E54EE3FD8FC27 /* Pods-PowerShare.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PowerShare.release.xcconfig"; path = "Pods/Target Support Files/Pods-PowerShare/Pods-PowerShare.release.xcconfig"; sourceTree = "<group>"; };
+		C705F4E52039253B00D75DAD /* SigninVCExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SigninVCExt.swift; sourceTree = "<group>"; };
 		C743C77720378D77002F22EF /* MainMenuExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuExt.swift; sourceTree = "<group>"; };
 		C754CDF02037E50F005F93AA /* Side Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Side Menu.swift"; sourceTree = "<group>"; };
 		C754CDF32037E54B005F93AA /* SideMenuProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuProtocol.swift; sourceTree = "<group>"; };
@@ -171,6 +173,7 @@
 			children = (
 				C743C77720378D77002F22EF /* MainMenuExt.swift */,
 				C77808B720389142008B5387 /* LoginVCExt.swift */,
+				C705F4E52039253B00D75DAD /* SigninVCExt.swift */,
 				C790EEB52037D409007B0557 /* UIImageViewExt.swift */,
 				C77DE1B8203813050067F5F3 /* UITextFieldExt.swift */,
 			);
@@ -334,6 +337,7 @@
 				C754CDF92037E590005F93AA /* CustomAlertController.swift in Sources */,
 				C743C77820378D77002F22EF /* MainMenuExt.swift in Sources */,
 				C772536B203786120095320A /* MainMenuVC.swift in Sources */,
+				C705F4E62039253B00D75DAD /* SigninVCExt.swift in Sources */,
 				C754CDFC2037E9C8005F93AA /* CustomNavigationController.swift in Sources */,
 				C7725369203786120095320A /* AppDelegate.swift in Sources */,
 				C790EEB32037C716007B0557 /* Constants.swift in Sources */,
